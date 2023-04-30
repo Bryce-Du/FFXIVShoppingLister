@@ -1,0 +1,10 @@
+.gridContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 20px;
+  /* adds a gap between the columns */
+}
+
+.recipeList {
+  text-align: left;
+}
