@@ -20,7 +20,7 @@ function RecipeList(props) {
   if (loading) {
     return <div>Loading...</div>
   }
-  if (recipes.length == 0) {
+  if (recipes.length === 0) {
     return <div>No recipes were found.</div>
   }
   return (
