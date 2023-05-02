@@ -2,8 +2,8 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 const baseURL = 'https://xivapi.com'
 
-export const getRecipes = createAsyncThunk('recipes/getRecipes', async () => {
-  const response = await fetch(`${baseURL}/recipe`);
+export const getRecipes = createAsyncThunk('recipes/getRecipes', async (page) => {
+  const response = await fetch(`${baseURL}/recipe?page=${page}`);
   const json = await response.json();
   if (!response.ok) {
     throw new Error(json.message);
