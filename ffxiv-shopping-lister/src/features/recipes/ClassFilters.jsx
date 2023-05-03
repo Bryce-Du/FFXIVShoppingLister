@@ -14,7 +14,6 @@ function ClassFilters({ classFiltered, setClassFiltered }) {
 
   const handleClick = (e) => {
     setClassFiltered(e.target.id)
-    console.log(classFiltered)
     dispatch(getRecipesByClass({ classId: e.target.id, page: 1 }))
   }
 
