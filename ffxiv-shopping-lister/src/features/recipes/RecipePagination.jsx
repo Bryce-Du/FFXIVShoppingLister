@@ -1,16 +1,16 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { getRecipes } from './recipeSlice';
+import { getRecipes, getRecipesByClass } from './recipeSlice';
 
-function RecipePagination({ pagination }) {
+function RecipePagination({ pagination, classFiltered }) {
   const dispatch = useDispatch();
-  // const { pagination } = props
 
   const handleNext = () => {
-    dispatch(getRecipes(pagination?.PageNext))
+    console.log(pagination?.PageNext)
+    classFiltered ? dispatch(getRecipesByClass({ classId: classFiltered, page: pagination?.PageNext })) : dispatch(getRecipes(pagination?.PageNext))
   }
   const handlePrev = () => {
-    dispatch(getRecipes(pagination?.PagePrev))
+    classFiltered ? dispatch(getRecipesByClass({ classId: classFiltered, page: pagination?.PagePrev })) : dispatch(getRecipes(pagination?.PagePrev))
   }
 
   return (

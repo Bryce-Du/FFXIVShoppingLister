@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import ReactPaginate from 'react-paginate'
 import { getRecipes } from './recipeSlice';
 import Recipe from './Recipe';
 import RecipeDetails from './RecipeDetails';
 import RecipePagination from './RecipePagination';
+import ClassFilters from './ClassFilters'
 
 import './RecipeList.css'
 
@@ -13,6 +13,7 @@ function RecipeList(props) {
   const { recipes, loading, error } = useSelector((state) => state.recipe)
   const pagination = useSelector((state) => state.recipe.recipes.Pagination)
   const [recipeDetailId, setRecipeDetailId] = useState()
+  const [classFiltered, setClassFiltered] = useState()
 
   useEffect(() => {
     dispatch(getRecipes(pagination?.page || 1));
@@ -27,7 +28,8 @@ function RecipeList(props) {
   return (
     <div className='gridContainer'>
       <div className='recipeList'>
-        <RecipePagination pagination={pagination} />
+        <ClassFilters classFiltered={classFiltered} setClassFiltered={setClassFiltered} />
+        <RecipePagination pagination={pagination} classFiltered={classFiltered} />
         {recipes.Results.map((recipe) => {
           return <Recipe
             key={recipe.ID}

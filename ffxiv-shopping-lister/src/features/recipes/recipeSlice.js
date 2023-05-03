@@ -18,6 +18,23 @@ export const getRecipeById = createAsyncThunk('recipes/getRecipeById', async (id
   }
   return json;
 })
+export const getRecipesByClass = createAsyncThunk('recipes/getRecipesByClass', async (data) => {
+  const { classId, page } = data;
+  const response = await fetch(`${baseURL}/search?indexes=recipe&filters=ClassJob.ID=${classId}&page=${page}`);
+  const json = await response.json();
+  if (!response.ok) {
+    throw new Error(json.message);
+  }
+  return json;
+})
+export const getClasses = createAsyncThunk('recipes/getClasses', async () => {
+  const response = await fetch(`${baseURL}/classJob`);
+  const json = await response.json();
+  if (!response.ok) {
+    throw new Error(json.message);
+  }
+  return json;
+})
 
 const recipeSlice = createSlice({
   name: 'recipe',
@@ -51,7 +68,15 @@ const recipeSlice = createSlice({
       .addCase(getRecipeById.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
-      });
+      })
+      .addCase(getClasses.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.classes = action.payload;
+      })
+      .addCase(getRecipesByClass.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.recipes = action.payload
+      })
   },
 });
 
